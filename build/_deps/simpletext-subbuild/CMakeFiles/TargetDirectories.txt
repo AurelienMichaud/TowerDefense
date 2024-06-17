@@ -1,0 +1,3 @@
+/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/build/_deps/simpletext-subbuild/CMakeFiles/simpletext-populate.dir
+/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/build/_deps/simpletext-subbuild/CMakeFiles/edit_cache.dir
+/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/build/_deps/simpletext-subbuild/CMakeFiles/rebuild_cache.dir
