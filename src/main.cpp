@@ -4,8 +4,10 @@
 #include <GLFW/glfw3.h>
 
 #include <iostream>
+#include <vector>
 
 #include "App.hpp"
+#include "Ennemis.hpp"
 
 namespace {
     App& window_as_app(GLFWwindow* window)
@@ -18,6 +20,7 @@ namespace {
 constexpr double TARGET_TIME_FOR_FRAME { 1.0 / 60.0 };
 
 int main() {
+
     // Set an error callback to display glfw errors
     glfwSetErrorCallback([](int error, const char* description) {
         std::cerr << "Error " << error << ": " << description << std::endl;
@@ -84,6 +87,8 @@ int main() {
 
     app.setup();
 
+    int frame = 1;
+
     // Loop until the user closes the window
     while (!glfwWindowShouldClose(window)) {
 
@@ -94,10 +99,25 @@ int main() {
 
         // Swap front and back buffers
         glfwSwapBuffers(window);
+
+        //render
         app.render();
+
+        //tickupdate every 
+        if (frame% 10 == 0){
+            app.tick(frame/10);
+        }
+
+        if (frame == 60){
+            frame = 1;
+        }else{
+            frame++;
+        }
+
         // Poll for and process events
         glfwPollEvents();
-
+        //truc
+        
         // Optional: limit the frame rate
 		double elapsedTime { glfwGetTime() - startTime };
         // wait the remaining time to match the target wanted frame rate

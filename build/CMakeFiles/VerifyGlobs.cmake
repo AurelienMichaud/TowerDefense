@@ -17,14 +17,15 @@ endif()
 file(GLOB_RECURSE NEW_GLOB LIST_DIRECTORIES false "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/*")
 set(OLD_GLOB
   "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/App.cpp"
-  "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/App.hpp"
+  "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/Ennemis.cpp"
   "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/GLHelpers.cpp"
-  "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/GLHelpers.hpp"
+  "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/Graph.cpp"
+  "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/Map.cpp"
+  "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/Tours.cpp"
   "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/main.cpp"
   "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/structures.cpp"
   "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/structures.hpp"
   "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/utils.cpp"
-  "/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/src/utils.hpp"
   )
 if(NOT "${NEW_GLOB}" STREQUAL "${OLD_GLOB}")
   message("-- GLOB mismatch!")

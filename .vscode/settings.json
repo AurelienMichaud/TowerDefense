@@ -69,6 +69,23 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "map": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "__bit_reference": "cpp",
+        "__config": "cpp",
+        "__hash_table": "cpp",
+        "__locale": "cpp",
+        "__node_handle": "cpp",
+        "__split_buffer": "cpp",
+        "__threading_support": "cpp",
+        "__verbose_abort": "cpp",
+        "bitset": "cpp",
+        "complex": "cpp",
+        "cwctype": "cpp",
+        "execution": "cpp",
+        "string_view": "cpp",
+        "variant": "cpp",
+        "deque": "cpp",
+        "queue": "cpp",
+        "unordered_set": "cpp"
     }
 }

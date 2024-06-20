@@ -245,6 +245,30 @@ src/App.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/App.cpp.s
 .PHONY : src/App.cpp.s
 
+src/Ennemis.o: src/Ennemis.cpp.o
+.PHONY : src/Ennemis.o
+
+# target to build an object file
+src/Ennemis.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Ennemis.cpp.o
+.PHONY : src/Ennemis.cpp.o
+
+src/Ennemis.i: src/Ennemis.cpp.i
+.PHONY : src/Ennemis.i
+
+# target to preprocess a source file
+src/Ennemis.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Ennemis.cpp.i
+.PHONY : src/Ennemis.cpp.i
+
+src/Ennemis.s: src/Ennemis.cpp.s
+.PHONY : src/Ennemis.s
+
+# target to generate assembly for a file
+src/Ennemis.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Ennemis.cpp.s
+.PHONY : src/Ennemis.cpp.s
+
 src/GLHelpers.o: src/GLHelpers.cpp.o
 .PHONY : src/GLHelpers.o
 
@@ -268,6 +292,78 @@ src/GLHelpers.s: src/GLHelpers.cpp.s
 src/GLHelpers.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/GLHelpers.cpp.s
 .PHONY : src/GLHelpers.cpp.s
+
+src/Graph.o: src/Graph.cpp.o
+.PHONY : src/Graph.o
+
+# target to build an object file
+src/Graph.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Graph.cpp.o
+.PHONY : src/Graph.cpp.o
+
+src/Graph.i: src/Graph.cpp.i
+.PHONY : src/Graph.i
+
+# target to preprocess a source file
+src/Graph.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Graph.cpp.i
+.PHONY : src/Graph.cpp.i
+
+src/Graph.s: src/Graph.cpp.s
+.PHONY : src/Graph.s
+
+# target to generate assembly for a file
+src/Graph.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Graph.cpp.s
+.PHONY : src/Graph.cpp.s
+
+src/Map.o: src/Map.cpp.o
+.PHONY : src/Map.o
+
+# target to build an object file
+src/Map.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Map.cpp.o
+.PHONY : src/Map.cpp.o
+
+src/Map.i: src/Map.cpp.i
+.PHONY : src/Map.i
+
+# target to preprocess a source file
+src/Map.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Map.cpp.i
+.PHONY : src/Map.cpp.i
+
+src/Map.s: src/Map.cpp.s
+.PHONY : src/Map.s
+
+# target to generate assembly for a file
+src/Map.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Map.cpp.s
+.PHONY : src/Map.cpp.s
+
+src/Tours.o: src/Tours.cpp.o
+.PHONY : src/Tours.o
+
+# target to build an object file
+src/Tours.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Tours.cpp.o
+.PHONY : src/Tours.cpp.o
+
+src/Tours.i: src/Tours.cpp.i
+.PHONY : src/Tours.i
+
+# target to preprocess a source file
+src/Tours.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Tours.cpp.i
+.PHONY : src/Tours.cpp.i
+
+src/Tours.s: src/Tours.cpp.s
+.PHONY : src/Tours.s
+
+# target to generate assembly for a file
+src/Tours.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/OpenGL-Template.dir/build.make CMakeFiles/OpenGL-Template.dir/src/Tours.cpp.s
+.PHONY : src/Tours.cpp.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -360,9 +456,21 @@ help:
 	@echo "... src/App.o"
 	@echo "... src/App.i"
 	@echo "... src/App.s"
+	@echo "... src/Ennemis.o"
+	@echo "... src/Ennemis.i"
+	@echo "... src/Ennemis.s"
 	@echo "... src/GLHelpers.o"
 	@echo "... src/GLHelpers.i"
 	@echo "... src/GLHelpers.s"
+	@echo "... src/Graph.o"
+	@echo "... src/Graph.i"
+	@echo "... src/Graph.s"
+	@echo "... src/Map.o"
+	@echo "... src/Map.i"
+	@echo "... src/Map.s"
+	@echo "... src/Tours.o"
+	@echo "... src/Tours.i"
+	@echo "... src/Tours.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

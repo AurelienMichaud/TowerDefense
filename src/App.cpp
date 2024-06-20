@@ -1,4 +1,7 @@
 #include "App.hpp"
+#include <queue>
+#include <unordered_set>
+#include <random>
 
 App::App() : _previousTime(0.0), _viewSize(2.0) {
     // img::Image test {img::load(make_absolute_path("images/map_design2_v1.png", true), 3, true)};
@@ -39,7 +42,18 @@ App::App() : _previousTime(0.0), _viewSize(2.0) {
     tours_textures[typeTour::chevalier] = loadTexture(img::load(make_absolute_path("images/Tours/TourChevalier.png", true), 3, true));
     tours_textures[typeTour::sorcier] = loadTexture(img::load(make_absolute_path("images/Tours/TourSorcier.png", true), 3, true));
 
+    this->map2d = ChargeMatMap(&map10x10);
+    displayMap(this->map2d);
+
+    
+    std::cout << "AHAHAHAH";
+
+    this->preCalculation();
+    this->populate();
+
 }
+
+
 
 void App::setup() {
     // Set the clear color to a nice blue
@@ -68,7 +82,6 @@ void App::setup() {
 // }
 
 void App::render() {
-
     if(JeuStart==1) {
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -83,6 +96,7 @@ void App::render() {
 
         std::vector<Case> VectCaseMap{};
         VectCaseMap = ChargeVectMap(&map10x10);
+         
 
         int posDansVectCaseMap{0};
         for(int i{0}; i<10; i++) {
@@ -150,7 +164,25 @@ void App::render() {
             }
         }
 
-        TextRenderer.Label("Jolie map tavu", _width / 2, 20, SimpleText::CENTER);
+        // déplacement du repère en haut à gauche
+        glTranslatef(-1.f, -1.f, 0.f);
+
+
+
+        for (unsigned long i = 0; i < this->ennemis.size(); i++){
+
+            glPushMatrix();
+
+            // déplacement du repère en haut à gauche
+            glTranslatef(this->ennemis.at(i).posX*0.2f+1, -this->ennemis.at(i).posY*0.2f+1, 0.f);
+            draw_quad_with_texture(ennemis_textures[this->ennemis.at(i)._typeEnnemi]);
+            glTranslatef(-this->ennemis.at(i).posX*0.2f+1, this->ennemis.at(i).posY*0.2f-1, 0.f);
+
+
+            glPopMatrix();
+        }
+
+        //TextRenderer.Label("Jolie map tavu", _width / 2, 20, SimpleText::CENTER);
         TextRenderer.Label("Appuyez sur la touche T", _width / 50, 100, SimpleText::LEFT);
         TextRenderer.Label("pour placer les 3 Tours", _width / 50, 115, SimpleText::LEFT);
         TextRenderer.Label("Appuyez sur la touche Y", _width / 50, 140, SimpleText::LEFT);
@@ -177,6 +209,8 @@ void App::render() {
 
         xposTourVerif = ((float)xposCursor-(((float)_width-_height)/2))*(1080.f/_height);
         yposTourVerif = yposCursor*(1080.f/_height);
+
+        glTranslatef(1.f, 1.f, 0.f);
 
         if(ActionPlacementTour==1 && CompteurPlacementTour!=6) {
             // std::cout << " Compteur Placement Tour = " << CompteurPlacementTour << std::endl;
@@ -253,6 +287,122 @@ void App::render() {
     }
 }
 
+void App::tick(int tick){
+    if (tick==1){
+        this->moveEnnemies();
+    }
+
+    if (tick==4){
+        std::random_device rd;
+        // Initialize a Mersenne Twister pseudo-random generator with the random device
+        std::mt19937 gen(rd());
+        // Create a uniform distribution for integers between 1 and 20 (inclusive)
+        std::uniform_int_distribution<> distr(1, 4);
+        
+
+        // Generate a random number
+        int random_number = distr(gen);
+
+        if (random_number==2)populate();
+
+    }
+}
+
+void App::moveEnnemies(){
+
+    int size = this->ennemis.size();
+
+    for (int i = 0; i < size ; i++){
+        
+        if (this->ennemis.at(i).posX == endX && this->ennemis.at(i).posY == endY){
+            this->ennemis.erase(this->ennemis.begin() + i);
+
+            i--;
+            size--;
+            continue;
+        }
+
+        for (int j = 0; j < (int) this->path.size()-1; j++){
+            if (this->ennemis.at(i).posX == this->path.at(j).first && this->ennemis.at(i).posY == this->path.at(j).second){
+                this->ennemis.at(i).posX = this->path.at(j+1).first;
+                this->ennemis.at(i).posY = this->path.at(j+1).second;
+                break;
+            }
+        }
+    }
+}
+
+std::vector<Case*> App::getNeighbors(Case* node) {
+    std::vector<Case*> neighbors;
+    int x = node->posx;
+    int y = node->posy;
+
+    // Add neighboring cells (assuming 4-directional movement)
+    if (x > 0) neighbors.push_back(&map2d[y - 1][x]);
+    if (x < (int)map2d.size() - 1) neighbors.push_back(&map2d[y + 1][x]);
+    if (y > 0) neighbors.push_back(&map2d[y][x - 1]);
+    if (y < (int)map2d[0].size() - 1) neighbors.push_back(&map2d[y][x + 1]);
+
+    return neighbors;
+}
+
+std::vector<std::pair<int, int>> App::calculatePath(int startX, int startY, int endX, int endY) {
+    std::cout << "1";
+    if (map2d.empty()) return {};
+
+    //auto compare = [](Case* a, Case* b) { return a->f > b->f; };
+    std::priority_queue<Case*, std::vector<Case*>, CompareF> openSet;
+    std::unordered_set<Case*> closedSet;
+    std::cout << "2";
+
+    Case* startNode = &map2d[startX][startY];
+    Case* endNode = &map2d[endX][endY];
+
+    startNode->g = 0;
+    startNode->h = heuristic(startX, startY, endX, endY);
+    startNode->f = startNode->g + startNode->h;
+    openSet.push(startNode);
+
+    std::cout << "3";
+
+    while (!openSet.empty()) {
+        Case* current = openSet.top();
+        openSet.pop();
+
+        if (current == endNode) {
+            std::vector<std::pair<int, int>> path;
+            while (current != nullptr) {
+                path.push_back({ current->posx, current->posy });
+                current = current->parent;
+            }
+            std::reverse(path.begin(), path.end());
+            return path;
+        }
+
+        closedSet.insert(current);
+
+        for (Case* neighbor : getNeighbors(current)) {
+            if (closedSet.find(neighbor) != closedSet.end() || neighbor->typeDeCase == typeCase::nonchemin) {
+                continue;
+            }
+
+            int tentative_gScore = current->g + 1; // assuming each move costs 1
+
+            // if (tentative_gScore < neighbor->g) {
+            //     neighbor->parent = current;
+            //     neighbor->g = tentative_gScore;
+            //     neighbor->h = heuristic(neighbor->posx, neighbor->posy, endX, endY);
+            //     neighbor->f = neighbor->g + neighbor->h;
+
+            //     openSet.push(neighbor);
+            // }
+        }
+    }
+
+    return {}; // Return empty path if no path is found
+}
+
+
 void App::key_callback(int key, int scancode, int action, int mods) {
     if (key == GLFW_KEY_S && action == GLFW_PRESS)
 	    if(JeuStart == 0) {
@@ -325,6 +475,8 @@ void App::size_callback(int width, int height) {
     } else {
         glOrtho(-_viewSize / 2.0f, _viewSize / 2.0f, -_viewSize / 2.0f / aspectRatio, _viewSize / 2.0f / aspectRatio, -1.0f, 1.0f);
     }
+
+
 }
 
 
@@ -332,3 +484,54 @@ void App::size_callback(int width, int height) {
 
 
 // Autres fonctions
+
+void App::populate(){
+    std::random_device rd;
+    // Initialize a Mersenne Twister pseudo-random generator with the random device
+    std::mt19937 gen(rd());
+    // Create a uniform distribution for integers between 1 and 20 (inclusive)
+    std::uniform_int_distribution<> distr(1, 3);
+    
+
+    // Generate a random number
+    int random_number = distr(gen);
+
+    if (random_number == 1) this->ennemis.push_back(Ennemi(startX, startY, typeEnnemi::colin));
+    if (random_number == 2) this->ennemis.push_back(Ennemi(startX, startY, typeEnnemi::milan));
+    if (random_number == 3) this->ennemis.push_back(Ennemi(startX, startY, typeEnnemi::elisabeth));
+}
+
+void App::preCalculation(){
+    short sx {-1};
+    short sy {-1};
+
+    short ex {-1};
+    short ey {-1};
+
+    for (short i=0; i < 10; i++){
+        for (short j=0; j < 10; j++){
+            if (this->map2d.at(i).at(j).typeDeCase == typeCase::chemin_depart){
+                sx = j;
+                sy = i;
+            }
+
+            if (this->map2d.at(i).at(j).typeDeCase == typeCase::chemin_arrivee){
+                ex = j;
+                ey = i;
+            }
+        }
+    }
+
+    this->startX = sx;
+    this->startY = sy;
+    this->endX = ex;
+    this->endY = ey;
+
+    //this->path = calculatePath(sx,sy,1,0);
+    this->path = {{5,9},{5,8},{5,7},{6,7},{7,7},{7,6},{8,6},{8,5},{8,4}, {7,4},{6,4},{6,3},{6,2},{7,2}, {7,1}, {7,0}};
+
+    // std::cout << "AHA" << std::endl;
+    // for (int i = 0; i < (int)this->path.size(); i++){
+    //     std::cout << this->path.at(i).first << "/" << this->path.at(i).second << std::endl;
+    // }
+}

@@ -6,7 +6,7 @@ C_DEFINES = -D_GLFW_COCOA
 
 C_INCLUDES = -I/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/build/_deps/glfw-src/include -I/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/build/_deps/glfw-src/src -I/Users/aurelienmichaud/Documents/IMAC/C++/TowerDefense/build/_deps/glfw-build/src
 
-C_FLAGSarm64 = -g -std=c99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fPIC -Wall
+C_FLAGSarm64 = -g -std=c99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -fPIC -Wall
 
-C_FLAGS = -g -std=c99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -mmacosx-version-min=14.3 -fPIC -Wall
+C_FLAGS = -g -std=c99 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.5.sdk -fPIC -Wall
 

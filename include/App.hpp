@@ -32,6 +32,12 @@ struct App {
     void size_callback(int width, int height);
 
     void render();
+    void populate();
+    void tick(int tick);
+    void moveEnnemies();
+    std::vector<Case*> getNeighbors(Case* node);
+    void preCalculation();
+    std::vector<std::pair<int, int>> calculatePath(int startX, int startY, int endX, int endY);
 
     int _width {};
     int _height {};
@@ -44,6 +50,8 @@ struct App {
 
     SimpleText TextRenderer {};
 
+
+
 // Partie MAP
 
     bool JeuStart{0};
@@ -53,11 +61,24 @@ struct App {
     img::Image map10x10 {img::load(make_absolute_path("images/Tuiles/map10x10.png", true), 3, false)};
     img::Image map1080x1080 {img::load(make_absolute_path("images/Tuiles/map_design2_v2.png", true), 3, false)};
 
+    std::vector<std::vector<Case>> map2d;
+
+    int startX;
+    int startY;
+
+    int endX;
+    int endY;
+
+    std::vector<std::pair<int, int>> path;
+
 
 // Partie ENNEMIS
 
     // uMap ennemis
     std::unordered_map<typeEnnemi, GLuint> ennemis_textures {};
+
+    // Vecteur pour stocker les ennemis
+    std::vector<Ennemi> ennemis {};
 
 // Partie TOURS
 
